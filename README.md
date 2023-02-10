@@ -9,7 +9,7 @@ To run the repository for yourself, you can simply run through the cells of eval
 or you can run populate_backtesting.py to create all the necessary dataframes, and then run 
 evaluate_strategy.ipynb.
 
-Note: for some reason, the wikipedia article containing the a table of historical changes to the sp500
+Note: for some reason, the wikipedia article containing the table of historical changes to the sp500
 has recently changed the names of the table columns a couple of times.  If populate_backtesting.py is 
 not working, a good file to check would be wiki.py, and see if the dropped columns line up with the 
 column titles in the actual wikipedia dataframe.
