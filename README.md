@@ -1,5 +1,5 @@
 # momentum_sp500_backtesting
-Backtesting a momentum strading strategy that picks a subset of stocks to buy each month from the S&amp;P 500
+Backtesting a momentum trading strategy that picks a subset of stocks to buy each month from the S&amp;P 500
 
 Information on the trading strategy can be found in strategy.txt.
 
