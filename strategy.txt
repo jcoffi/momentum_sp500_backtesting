@@ -1,0 +1,66 @@
+## Strategy:
+
+# 1) To choose stocks to purchase for a given month:
+#       a) choose top n (250) positive returning stocks over the last 12
+#          months 
+#       b) choose top m (100) returning stocks over the last 6 
+#          months from the set n
+#       c) choose top l (10) returning stocks over the last 3 
+#          months from the set m.  These are the stocks that will be 
+#          in the portfolio in any given month.
+
+# 2) Hold cash if the previous month's sp500 had negative returns
+
+#####################################################################
+
+# Results: 
+I think the worst part of this strategy was relying on wikipedia for 
+the changes to the sp500, and using yahoo finance blindly to get 
+historical prices.  At the early 2000's there were less than 400 stocks 
+that I had price information for.  This was adapted for in my strategy, 
+but it was not ideal.  Also, I manually filtered out some data that was 
+clearly erroneous, aka >5X monthly returns, but I'm sure there were
+other discrepancies that I didn't catch.  Rather than using sp500 
+historical data, I could theoretically search for companies by market 
+cap historically.
+
+#####################################################################
+
+# Room for experimentation:
+#   a) intramonth stop losses?
+#   b) different time horizons, etc top l gaining stocks last month
+#   c) different number of stocks chosen, currently half>100>10
+#   d) booking profits at intervals: ex book 50% at 8% gain, 
+#      book remaining 50% at 16% gain
+#   e) If a stock stays in the rotation for multiple months, I will not 
+#      sell any of it off until it goes out of the rotation.  At that
+#      point, I will sell, put profit into newly chosen stock at a value
+#      of 10% of total portfolio, and then distribute excess into all
+#      10 stocks evenly
+
+# Note: This strategy will only pick stocks that have been in the 
+# S&P 500 for at least 12 months.
+
+
+# Machine Learning:
+# Eventually, I could turn this into a machine learning model
+#
+# Split the returns data into 2 year timeframes
+#
+# test out different parameters:
+#      param1 = # 12 month stocks to selected
+#      param2 = # 6 month stocks to selected
+#      param3 = # 3 month stocks to selected
+#      param4 = selloff strategy
+#
+# Each x value would be some parameter permutation matched with
+#      a random two year period.  For this period, the first year
+#      is purely for calculations and returns would be calculated
+#      for the second year
+#      
+# With enough permutations of parameters, I could fit a linear regression
+#      on the four parameters and get a sense of how they effect the strategy 
+#      on average
+#
+# I would have to keep in mind a restraint option for the parameters:
+#      12month # > 6month # > 3month #
