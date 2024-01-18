@@ -1,6 +1,6 @@
 import sqlalchemy
 import pandas as pd
-from datetime import datetime
+from datetime import datetime as dt
 import numpy as np
 from choose_stocks import choose_stocks
 
@@ -17,10 +17,10 @@ def get_next_date(date, date_series=None):
     """Function to be used by get_returns() function.  Can
     Also be called alone.  The difference is, if called
     independently, it will create date series on its own
-    but if called within get_returns(), date_series 
+    but if called within get_returns(), date_series
     will be passed in"""
     if isinstance(date, str):
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date = dt.strptime(date, '%Y-%m-%d')
     if date_series is None:
         date_series = get_date_series()
     current_idx = date_series[date_series==date].index[0]
@@ -32,16 +32,16 @@ def get_returns(
     """Get returns for a given date when using the
     momentum strategy.
 
-    If you are only calculating for one date, you can 
+    If you are only calculating for one date, you can
     skip passing in a date series.
-    
+
     If you are calculating returns for multiple
     dates, use date_series=get_date_series()
     outside of the function and pass it in for each
     date.  This will avoid generating a new date_series
     for repeated function calls"""
     if isinstance(date, str):
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date = dt.strptime(date, '%Y-%m-%d')
     if date_series is None:
         date_series = get_date_series()
     next_date = get_next_date(date, date_series)
@@ -55,19 +55,19 @@ def get_returns(
 
 def get_returns_given_stocks(
     stocks, date, date_series=None):
-    """Get returns for all stocks in a given list, 
+    """Get returns for all stocks in a given list,
     rather than selecting based on momentum strategy
 
-    If you are only calculating for one date, you can 
+    If you are only calculating for one date, you can
     skip passing in a date series.
-    
+
     If you are calculating returns for multiple
     dates, use date_series=get_date_series()
     outside of the function and pass it in for each
     date.  This will avoid generating a new date_series
     for repeated function calls"""
     if isinstance(date, str):
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date = dt.strptime(date, '%Y-%m-%d')
     if date_series is None:
         date_series = get_date_series()
     next_date = get_next_date(date, date_series)

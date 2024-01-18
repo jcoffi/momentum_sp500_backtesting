@@ -1,6 +1,6 @@
 import sqlalchemy
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime as dt, timedelta
 import numpy as np
 
 
@@ -9,7 +9,7 @@ def get_non_missing(date):
     corresponding to the year preceeding the date, and returns all
     tickers where zero nan values are found in that time frame."""
     if isinstance(date, str):
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date = dt.strptime(date, '%Y-%m-%d')
     past = date - timedelta(days=365)
     engine = sqlalchemy.create_engine('sqlite:///backtesting.db')
     with engine.connect() as con:
@@ -23,7 +23,7 @@ def get_sp500_date(date):
     """Function to get a list of tickers present in the sp500 at a given date"""
     # Convert string inputs to datetime
     if isinstance(date, str):
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date = dt.strptime(date, '%Y-%m-%d')
     engine = sqlalchemy.create_engine('sqlite:///backtesting.db')
     with engine.connect() as con:
         tickers = pd.read_sql('ticker_df', con=con).squeeze().to_list()
@@ -44,7 +44,7 @@ def get_eligible(date):
     date."""
     # Convert string inputs to datetime
     if isinstance(date, str):
-        date = datetime.strptime(date, '%Y-%m-%d')
+        date = dt.strptime(date, '%Y-%m-%d')
     non_na_set = set(get_non_missing(date))
     sp500_set = set(get_sp500_date(date))
     eligible = list(sp500_set.intersection(non_na_set))
@@ -52,8 +52,8 @@ def get_eligible(date):
 
 def choose_stocks(date, sel_1_portion = 0.5, sel_2_size=100, sel_3_size=10):
     """Selects stocks for a given date by using the following methodology:
-    1)  Of all sp500 stocks, select sel_1_portion percent of them with the 
-        highest returns over 12 months.  We use sel_1_portion rather than a 
+    1)  Of all sp500 stocks, select sel_1_portion percent of them with the
+        highest returns over 12 months.  We use sel_1_portion rather than a
         number because the number of eligible stocks for a given date varies
         based on availability of data
     2)  Select sel_2_size stocks with highest returns over last 6 months
@@ -89,4 +89,3 @@ def choose_stocks(date, sel_1_portion = 0.5, sel_2_size=100, sel_3_size=10):
         .index
         .to_list())
     return selection_3
-

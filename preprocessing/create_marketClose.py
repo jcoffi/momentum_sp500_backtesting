@@ -1,14 +1,14 @@
 import yfinance as yf
 import pandas as pd
-import datetime
+import datetime as dt
 import sqlalchemy
 
 def main():
 
-    def get_historical_changes(changes_df, date=datetime.datetime.now()):
-        """Trims changes df to include only changes between 
-        1999-01-01 and the current date, but date could be 
-        set to any datetime.datetime object"""
+    def get_historical_changes(changes_df, date=dt.dt.now()):
+        """Trims changes df to include only changes between
+        1999-01-01 and the current date, but date could be
+        set to any dt.datetime object"""
         today = date
         return (changes_df.loc[
             (changes_df['Date']<today) &
@@ -16,8 +16,8 @@ def main():
             .reset_index(drop=True))
 
     def get_all_tickers(historical_changes, ticker_df):
-        """Returns a list of all tickers currently in the sp500 
-        and and all tickers that have been removed from the 
+        """Returns a list of all tickers currently in the sp500
+        and and all tickers that have been removed from the
         sp500 since 1999-01-01"""
         all_tickers = ticker_df['Symbol'].to_list() + \
             historical_changes['Removed'].dropna().to_list()
@@ -27,10 +27,10 @@ def main():
 
     def create_df():
         """executes a few functions in order to return the main
-        df which has market close data since 1999 for all 
-        tickers currently in sp500 and all tickers that have 
-        been removed from sp500 since 1999-01-01. Also drops 
-        all tickers that had only nan results.  
+        df which has market close data since 1999 for all
+        tickers currently in sp500 and all tickers that have
+        been removed from sp500 since 1999-01-01. Also drops
+        all tickers that had only nan results.
         Puts the resulting dataframe in the database."""
         engine = sqlalchemy.create_engine(
             'sqlite:///backtesting.db')
