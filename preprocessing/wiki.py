@@ -2,7 +2,7 @@
 # them into the base data needed to backtest my trading strategy
 
 import pandas as pd
-from datetime import datetime
+from datetime import dt
 import sqlalchemy
 
 def main():
@@ -24,7 +24,7 @@ def main():
     def create_changes_df():
         """Create a dataframe of changes to the sp500"""
         def format_date(date):
-            d = datetime.strptime(date, '%B %d, %Y')
+            d = dt.strptime(date, '%B %d, %Y')
             d = d.strftime('%Y-%m-%d')
             return d
         return (pd.read_html(
